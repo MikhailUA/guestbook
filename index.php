@@ -1,6 +1,6 @@
 ﻿
 <?php
-// git 2 2валидация и запись данных в файл
+//!!!! git 2 2валидация и запись данных в файл
 // (email (поставил type = 'email') и textarea (поставил атрибут required) валидируются в браузере)
 session_start();
 
@@ -128,7 +128,7 @@ function pagination(){
                         </a>
                     </li>-->
                     <?php pagination(); ?>
-<!--                    <li>
+<!--                   <li>
                         <a href="#" aria-label="Next">
                             <span aria-hidden="true">&raquo;</span>
                         </a>
