@@ -1,7 +1,6 @@
 ﻿<?php
 
-
-// (исх) валидация и запись данных в файл
+// валидация и запись данных в файл
 
 // (email (поставил type = 'email') и textarea (поставил атрибут required) валидируются в браузере)
 session_start();
@@ -120,7 +119,7 @@ function pagination(){
 
             <?php if (file_exists("guestbook.json") && isset($_SESSION['auth']) && $_SESSION['auth']==true) {
                 display();
-            } else {echo "для отображения записей необходимо залогинится";}?>
+            } else {echo "для отображения записей необходимо залогиниться";}?>
 
             <nav>
                 <ul class="pagination">
