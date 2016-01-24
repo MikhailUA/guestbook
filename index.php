@@ -1,6 +1,8 @@
-﻿
-<?php
-//!!!! +++ git 2 2валидация и запись данных в файлs sadsadsad
+﻿<?php
+
+
+// (исх) валидация и запись данных в файл
+
 // (email (поставил type = 'email') и textarea (поставил атрибут required) валидируются в браузере)
 session_start();
 
@@ -142,4 +144,3 @@ function pagination(){
 
 </body>
 </html>
-
