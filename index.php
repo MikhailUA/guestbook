@@ -7,7 +7,9 @@ session_start();
 
 if (isset($_SESSION['auth'])){var_dump($_SESSION);}
 
-if (isset($_POST['data']) && ctype_alpha($_POST['data']['name'])) {
+if (isset($_POST['data']) && ctype_alpha($_POST['data']['name']) && 
+isset($_SESSION['auth'])) {
+echo 'add note';
     $note = $_POST['data'];
     $note['date'] = date("m.d.Y");
     $data = fopen("guestbook.json", "a");
