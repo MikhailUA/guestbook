@@ -62,7 +62,6 @@ function pagination(){
 
 function vkAuth($code)
 {
-    $code = $_GET['code'];
     $url = "https://oauth.vk.com/access_token?client_id=5338546&client_secret=rLlDNSnJrASHhMIeTNy5&redirect_uri=http://guestbookm.local/index.php&code=$code";
 
     $ch = curl_init($url);
