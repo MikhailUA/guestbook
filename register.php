@@ -1,26 +1,15 @@
 <?php
-
+require_once 'functions.php';
+session_start();
 if (isset($_POST['data'])) {
-    $note = $_POST['data'];
-    $data = fopen("users.json", "a+");
-    $r=false;
-    while (!feof($data)) {
-        $user = fgets($data);
-        $user = json_decode($user,true);
-        if ($_POST['data']['email']==$user['email']){
-            echo "email already registered";
-            $r=true;
-            break;
-        }
-    }
 
-    if ($r!=true){
-        $note=json_encode($note);
-        fwrite($data, $note . PHP_EOL);
-        fclose($data);
-    }
+    if (register($_POST['data'])){
+        $_SESSION['auth'] = true;
+        $_SESSION['email'] = $_POST['data']['email'];
+        header("location: index.php");
+    };
+
 }
-
 
 ?>
 <!DOCTYPE html>

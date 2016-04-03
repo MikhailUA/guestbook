@@ -1,112 +1,30 @@
 ﻿<?php
+require_once 'functions.php';
 
-// валидация и запись данных в файл
-
-// (email (поставил type = 'email') и textarea (поставил атрибут required) валидируются в браузере)
 session_start();
 
-if (isset($_SESSION['auth'])){var_dump($_SESSION);}
+if (isset($_GET['code'])) {
 
-if (isset($_POST['data']) && ctype_alpha($_POST['data']['name']) && 
-isset($_SESSION['auth'])) {
-echo 'add note';
-    $note = $_POST['data'];
-    $note['date'] = date("m.d.Y");
-    $data = fopen("guestbook.json", "a");
-    $note=json_encode($note);
-    fwrite($data, $note.PHP_EOL);
-    fclose($data);
-}
+    $data = vkAuth($_GET['code']);
 
-function display()
-{
-    $data = fopen("guestbook.json", "r");
-    $perPage=2;
-    if (!isset($_GET['page'])) {
-        $linesToDispay = [1,$perPage];
-    }else{
-        $page = $_GET['page']*$perPage;
-        $linesToDispay = [$page,$page+1];
-    }
-    $lineCount = 0;
-
-    while (!feof($data)) {
-        $lineCount++;
-        $line = fgets($data);
-        $note = json_decode($line,true);
-        if ($lineCount >= $linesToDispay[0] && $lineCount <= $linesToDispay[1]) {
-        ?>
-        <div class="post-block">
-            <b><?php echo $note['name'] ?></b> <i><?php echo $note['email'] ?></i> <i
-                style="text-decoration: underline;"><?php echo $note['date'] ?></i>
-            <p>
-                <?php echo $note['text'] ?>
-            </p>
-        </div>
-        <?php
-        }elseif($lineCount>$linesToDispay[1]){break;}
-    }
-    fclose($data);
-}
-
-function postCount(){
-    $count=0;
-    $data = fopen("guestbook.json","r");
-    while (!feof($data)){
-        fgets($data);
-        $count++;
-    }
-    $count--;
-    return $count;
-}
-
-function pagination(){
-    $perPage=2;
-    $pageCount = floor(postCount()/$perPage);
-    for ($i = 1; $i<=$pageCount;$i++){
-        echo "<li><a href=\"index.php?page=$i\">$i</a></li>";
+    if (register($data)) {
+        echo "user registered and user logged in via Vk";
+        $_SESSION['auth'] = true;
+        $_SESSION['email'] = $data['email'];
+    } else {
+        echo "user logged in via Vk";
+        $_SESSION['auth'] = true;
+        $_SESSION['email'] = $data['email'];
     }
 }
 
+if (isset($_POST['data']) && ctype_alpha($_POST['data']['name']) &&
+    isset($_SESSION['auth'])) {
 
-if (isset($_GET['code'])){
+        addComment($_POST['data']);
 
-    $code = $_GET['code'];
-    $url = "https://oauth.vk.com/access_token?client_id=5338546&client_secret=rLlDNSnJrASHhMIeTNy5&redirect_uri=http://guestbookm.local/index.php&code=$code";
-
-    $ch = curl_init($url);
-    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-    curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, FALSE);
-
-    $data = json_decode(curl_exec($ch), true);
-
-    $userId = $data['user_id'];
-    $token = $data['access_token'];
-    //$email=$data['email'];
-    var_dump($data);
-
-    /*        //$url = "https://api.vk.com/method/users.get?user_id=$userId&v=5.44&access_token=$token";
-            //var_dump($url);
-            $url = "https://api.vk.com/method/friends.get?user_id=$userId&fields=nickname,bdate";
-            curl_setopt($ch, CURLOPT_URL, $url);
-            curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-            curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, FALSE);
-            $data1 = json_decode(curl_exec($ch), true);
-
-            var_dump($data1);die;*/
-    //var_dump($data);die;
-}else{
-    echo "vk not set";
 }
-
-
-
-
 ?>
-
-
-
-
 
 <!DOCTYPE html>
 <html>
