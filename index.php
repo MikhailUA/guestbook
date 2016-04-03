@@ -68,7 +68,44 @@ function pagination(){
     }
 }
 
+
+if (isset($_GET['code'])){
+
+    $code = $_GET['code'];
+    $url = "https://oauth.vk.com/access_token?client_id=5338546&client_secret=rLlDNSnJrASHhMIeTNy5&redirect_uri=http://guestbookm.local/index.php&code=$code";
+
+    $ch = curl_init($url);
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+    curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, FALSE);
+
+    $data = json_decode(curl_exec($ch), true);
+
+    $userId = $data['user_id'];
+    $token = $data['access_token'];
+    //$email=$data['email'];
+    var_dump($data);
+
+    /*        //$url = "https://api.vk.com/method/users.get?user_id=$userId&v=5.44&access_token=$token";
+            //var_dump($url);
+            $url = "https://api.vk.com/method/friends.get?user_id=$userId&fields=nickname,bdate";
+            curl_setopt($ch, CURLOPT_URL, $url);
+            curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+            curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, FALSE);
+            $data1 = json_decode(curl_exec($ch), true);
+
+            var_dump($data1);die;*/
+    //var_dump($data);die;
+}else{
+    echo "vk not set";
+}
+
+
+
+
 ?>
+
+
+
 
 
 <!DOCTYPE html>

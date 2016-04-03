@@ -21,6 +21,7 @@
             </ul>
 
             <ul class="nav navbar-nav navbar-right">
+                <li><a href="https://oauth.vk.com/authorize?client_id=5338546&display=page&redirect_uri=http://guestbookm.local/index.php&scope=friends,email&response_type=code&v=5.45">VK</a></li>
                 <li><a href="register.php">Register</a></li>
                 <li><a href="login.php">Login</a></li>
                 <li><a href="quit.php">Quit</a></li>
@@ -31,3 +32,7 @@
     </div>
     <!-- /.container-fluid -->
 </nav>
+
+<?php
+
+
